@@ -6,19 +6,6 @@ module.exports= {
   publicPath: "/",
   assetsDir: 'static',
   outputDir: 'dist',
-
-  // outputDir: "dist",
-  // configureWebpack: {
-  //   resolve: {
-  //     alias: {
-  //       'assets': '@/assets',
-  //       'common': '@/common',
-  //       'components': '@/components',
-  //       'network': '@/network',
-  //       'views': '@/views',
-  //     }
-  //   }
-  // },
   chainWebpack:(config)=>{
     config.resolve.alias
       .set('@',resolve('./src'))
@@ -28,46 +15,41 @@ module.exports= {
       .set('network',resolve('./src/network'))
       .set('views',resolve('./src/views'))
     //set第一个参数：设置的别名，第二个参数：设置的路径
-
   },
-  css: {
-    loaderOptions: {
-      postcss: {
-        plugins: [require('postcss-px2rem')({
-          remUnit: 192
-        })]
-      }
-    }
-  },
-  devServer: {
-    port: 8080, // 端口号
-    host: '127.0.0.1',
-    open: true,
-    proxy: { // 跨域配置
-      '/api': { // 过滤的api
-        target: 'http://www.ahjszgw.com/360xkw/tiku', // 要访问的URL
-        // target: 'http://localhost:8080',
-        changeOrigin: true, // true，启用跨域
-        pathRewrite: { // 要转发到的地址，根据需要也可不配置
-          '^/api': ''
-        }
-      }
-    }
-  },
-  configureWebpack: {
-    performance: {
-      hints: 'warning',
-      //入口起点的最大体积
-      maxEntrypointSize: 50000000,
-      //生成文件的最大体积
-      maxAssetSize: 30000000,
-      //只给出 js 文件的性能提示
-      assetFilter: function (assetFilename) {
-        return assetFilename.endsWith('.js');
-      }
-    }
+  // devServer: {
+  //   port: 8080, // 端口号
+  //   host: '127.0.0.1',
+  //   open: true,
+  //   disableHostCheck:true,
+  //   hotOnly: false,
+  //   headers:{
+  //     'Access-Control-Allow-Origin': '*',
+  //   },
+  //   proxy: { // 跨域配置
+  //     '/api': { // 过滤的api
+  //       target: 'http://192.168.8.131:3000', // 要访问的URL
+  //       changeOrigin: true, // true，启用跨域
+  //       ws: false,
+  //       pathRewrite: { // 要转发到的地址，根据需要也可不配置
+  //         '^/api': ''
+  //       }
+  //     }
+  //   }
+  // },
+  // configureWebpack: {
+  //   performance: {
+  //     hints: 'warning',
+  //     //入口起点的最大体积
+  //     maxEntrypointSize: 50000000,
+  //     //生成文件的最大体积
+  //     maxAssetSize: 30000000,
+  //     //只给出 js 文件的性能提示
+  //     assetFilter: function (assetFilename) {
+  //       return assetFilename.endsWith('.js');
+  //     }
+  //   }
     // performance: {
     //   hints:false
     // }
-  }
+  //}
 }

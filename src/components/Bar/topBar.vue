@@ -2,7 +2,10 @@
   <div id="bar">
     <div id="top-bar">
       <div class="left">
-        <i class="el-icon-s-fold menu"></i>
+        <div class="collapse-btn menu" @click="collapseChange">
+          <i v-if="!collapse" class="el-icon-s-fold"></i>
+          <i v-else class="el-icon-s-unfold"></i>
+        </div>
         <span class="text">图书馆管理后台</span>
       </div>
       <div class="right">
@@ -30,16 +33,17 @@
 </template>
 
 <script>
+  import bus from "./bus";
   export default {
     name: "TopBar",
     data(){
       return{
+        collapse: true,
         fullscreen: false
       }
     },
     methods: {
       handleFullScreen() {
-        console.log('进入');
         let element = document.documentElement;
         if (this.fullscreen) {
           if (document.exitFullscreen) {
@@ -65,6 +69,10 @@
         }
         this.fullscreen = !this.fullscreen;
       },
+      collapseChange() {
+        this.collapse = !this.collapse;
+        bus.$emit('collapse', this.collapse);
+      },
       out(){
         this.$store.commit('Token', {
           identity: '',
@@ -74,6 +82,11 @@
         window.localStorage.clear()
         this.$router.replace({path:'/login'})
       },
+    },
+    mounted() {
+      if (document.body.clientWidth < 1500) {
+        this.collapseChange();
+      }
     }
   }
 </script>
@@ -89,6 +102,11 @@
     background-color: #242f42;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .left{
+    display: flex;
+    align-items: center;
   }
 
   .menu {
